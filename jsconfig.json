@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "checkJs": true,
+        "lib": [
+            "webworker"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "work",
+        "packaging-work",
+
+        "version.js",
+        "*.tag.html"
+    ]
+}

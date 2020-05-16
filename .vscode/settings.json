@@ -1,0 +1,10 @@
+{
+    "eslint.validate": [
+        "javascript",
+        "vue"
+    ],
+    "cSpell.words": [
+        "linebreak",
+        "submenu"
+    ]
+}
