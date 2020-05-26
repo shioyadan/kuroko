@@ -30,7 +30,7 @@ app.on("ready", function() {
     m_window = new BrowserWindow({
         width: 800, 
         height: 600, 
-        show: true,
+        show: false,
         webPreferences: {
             nodeIntegration: true,
             nodeIntegrationInWorker: true,

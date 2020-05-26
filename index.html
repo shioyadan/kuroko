@@ -3,7 +3,32 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Vue.js Test</title>
+        <title>Kuroko</title>
+
+        <!-- 
+            スタイルシートは最初に読み込んでおく必要がある．
+            各ライブラリは内部でスタイルシートを挿入することがあり，その場合参照がずれる．
+        -->
+        <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap-vue/dist/bootstrap-vue.min.css">
+        <link  rel="stylesheet"type="text/css" href="./node_modules/open-iconic/font/css/open-iconic-bootstrap.css">
+        
+        <script src="./node_modules/vue/dist/vue.js"></script>
+        <script src="./node_modules/bootstrap-vue/dist/bootstrap-vue.js"></script>    
+        <script src="./node_modules/bootstrap-vue/dist/bootstrap-vue-icons.min.js"></script>
+        <script src="./node_modules/http-vue-loader/src/httpVueLoader.js"></script>
+        <!--
+        <script src="./node_modules/pdfjs-dist/build/pdf.js"></script>
+        -->
+        
+        <style type="text/css">
+            html, body {
+                width: 100%;      /* ウィンドウ全体に*/
+                height: 100%;
+                margin: 0;        /* すきまなく */
+                overflow: hidden;
+            }
+        </style>
     </head>
 
     <body>
@@ -11,28 +36,31 @@
             <app :store="store"></app>
         </div>
 
-        <script src="./node_modules/pdfjs-dist/build/pdf.js"></script>
-        <script src="./node_modules/vue/dist/vue.js"></script>
-        <script src="./node_modules/http-vue-loader/src/httpVueLoader.js"></script>
-
         <script>
-            var pdfjsLib = window["pdfjs-dist/build/pdf"];
-
             let {remote} = require("electron");
+
+            let Store = require("./store.js").Store;
+            let store = new Store();
+
             let template = [{
                 label: "Help",
-                submenu: [{
-                    label: "Toggle Dev Tool",
-                    click: function(){remote.getCurrentWindow().toggleDevTools();}
-                }]
+                submenu: [
+                    {
+                        label: "Toggle Dev Tool",
+                        click: function(){remote.getCurrentWindow().toggleDevTools();}
+                    },
+                    {
+                        label: "About Kuroko",
+                        click: function(){store.trigger(store.ACTION.OPEN_DIALOG_MODAL_MESSAGE, "Kuroko Version 0.02");}
+                    }
+                ]
             }];
             let Menu = remote.Menu;
             let menu = Menu.buildFromTemplate(template);
             Menu.setApplicationMenu(menu);
 
-            let Store = require("./store.js").Store;
-            let store = new Store();
-
+            Vue.use(BootstrapVue)
+            Vue.use(BootstrapVueIcons)
             Vue.use(httpVueLoader);
             let vue = new Vue({
                 el: "#app-holder",

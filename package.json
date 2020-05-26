@@ -2,6 +2,8 @@
     "dependencies": {
         "vue": "2.6.11",
         "http-vue-loader": "1.4.2",
+        "bootstrap-vue": "^2.14.0",
+        "bootstrap": "^4.5.0",
         "pdfjs-dist": "2.3.200",
         "@types/pdfjs-dist": "2.1.4"
     },

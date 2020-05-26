@@ -1,3 +1,4 @@
 
 *.pdf
+*.exe
 node_modules
