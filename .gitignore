@@ -2,3 +2,6 @@
 *.pdf
 *.exe
 node_modules
+packaging-work
+work
+THIRD-PARTY-LICENSES.md
