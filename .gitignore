@@ -3,5 +3,5 @@
 *.exe
 node_modules
 packaging-work
-work
+work/*
 THIRD-PARTY-LICENSES.md
