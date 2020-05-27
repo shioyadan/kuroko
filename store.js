@@ -21,7 +21,7 @@ const CHANGE = {
 
 class Store {
     constructor() {
-        this.tmpPDF_FileName = "tmp2.pdf";
+        this.tmpPDF_FileName = __dirname + "/tmp2.pdf";
         this.prevSavedPDF_FileName = "";
         this.flag = false;
         this.handlers_ = {};
@@ -70,7 +70,7 @@ class Store {
         console.log("Start conversion");
         this.inExec = true;
         this.trigger(CHANGE.START_PROCESSING);
-        exec(`kuroko.exe -b ${this.tmpPDF_FileName}`, (err, stdout, stderr) => {
+        exec(`${__dirname}/kuroko-cli.exe -b ${this.tmpPDF_FileName}`, (err, stdout, stderr) => {
             this.inExec = false;
             if (!err) {
                 this.isPDF_Created = true;
