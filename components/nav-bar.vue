@@ -72,7 +72,7 @@ module.exports = {
                     filters: [
                         {
                             name: "PDF",
-                            extensions: ["PDF"]
+                            extensions: ["pdf"]
                         }
                     ],
                     defaultPath: defaultFileName
