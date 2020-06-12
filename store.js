@@ -68,15 +68,26 @@ class Store {
 
     initKurokoCLI_() {
         this.inExec = true;
+
         exec(`${this.kurokoCLI_Bin_} -k`, (err, stdout, stderr) => {
             console.log("kuroko-cli: " + stdout);
             if (err) {
+                if (!fs.existsSync(this.kurokoCLI_Bin_)) {
+                    this.trigger(
+                        this.ACTION.OPEN_DIALOG_MODAL_MESSAGE, 
+                        `Could not find a binary: ${this.kurokoCLI_Bin_}.`
+                    );
+                    return;
+                }
+
                 console.log("Kuroko-cli could not open a virtual printer. Now try to install the printer.");
                 exec(`${this.kurokoCLI_Bin_} -i`, (err, stdout, stderr) => {
                     console.log("kuroko-cli: " + stdout);
                     if (err) {
-                        console.log("Kuroko-cli could not install a virtual printer.");
-                        this.trigger(this.ACTION.OPEN_DIALOG_MODAL_MESSAGE, "Failed initialization. Could not install a virtual printer.");
+                        this.trigger(
+                            this.ACTION.OPEN_DIALOG_MODAL_MESSAGE, 
+                            "Failed initialization. Could not install a virtual printer."
+                        );
                     }
                     else {
                         this.inExec = false;
