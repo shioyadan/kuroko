@@ -11,6 +11,15 @@
         -->
         <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap-vue/dist/bootstrap-vue.min.css">
+        <style type="text/css">
+            html, body {
+                width: 100%;      /* ウィンドウ全体に*/
+                height: 100%;
+                margin: 0;        /* すきまなく */
+                overflow: hidden;
+                background-color: #777;
+            }
+        </style>
         
         <script src="./node_modules/vue/dist/vue.js"></script>
         <script src="./node_modules/bootstrap-vue/dist/bootstrap-vue.js"></script>    
@@ -19,15 +28,6 @@
         <!--
         <script src="./node_modules/pdfjs-dist/build/pdf.js"></script>
         -->
-        
-        <style type="text/css">
-            html, body {
-                width: 100%;      /* ウィンドウ全体に*/
-                height: 100%;
-                margin: 0;        /* すきまなく */
-                overflow: hidden;
-            }
-        </style>
     </head>
 
     <body>
@@ -67,7 +67,7 @@
                     store: store
                 },
                 components: {
-                    "app": "url:components/app.vue"
+                    app: "url:components/app.vue"
                 }
             });
 

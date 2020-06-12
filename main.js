@@ -29,21 +29,26 @@ app.on("ready", function() {
     // The main window is not shown while loading. 
     m_window = new BrowserWindow({
         width: 800, 
-        height: 600, 
+        height: 600,
+        backgroundColor: "#777777", 
         show: false,
         webPreferences: {
             nodeIntegration: true,
             nodeIntegrationInWorker: true,
             contextIsolation: false,
-            plugins: true,   // PDF ビューアを使うために必要
             enableRemoteModule: true,
-            webviewTag: true
+            //webviewTag: true
         }
     });
     //m_window.setMenu(null);
 
     m_window.loadURL(currentURL);
     //m_window.toggleDevTools();
+
+    /*
+    m_window.once("ready-to-show", () => {
+        m_window.show();
+    })*/
 
     // ウィンドウが閉じる前に，設定を保存
     // store.config が生きている間 = ウィンドウの生存期間内に処理をしないといけない

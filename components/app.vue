@@ -59,7 +59,7 @@ module.exports = {
             });
         });
 
-
+        
         this.$nextTick(function (){
             // Get the current window
             let electronWindow = remote.getCurrentWindow();
