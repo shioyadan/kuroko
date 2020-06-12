@@ -1,0 +1,3 @@
+[submodule "kuroko-cli"]
+	path = kuroko-cli
+	url = git@github.com:shioyadan/kuroko-cli.git
