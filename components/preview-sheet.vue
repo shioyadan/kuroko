@@ -53,7 +53,7 @@ module.exports = {
         });
         store.on(store.CHANGE.CONTENT_UPDATE, function(){
             if (store.isPDF_Created) {
-                self.drawPDF(store.tmpPDF_FileName);
+                self.drawPDF(store.tmpPDF_FileName_);
             }
         });
     },

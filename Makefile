@@ -1,9 +1,15 @@
+# This file is assumed to be used with MAKE in cygwin
+
 PACKAGER = electron-packager
 #PACKAGER = ./node_modules/electron-packager/bin/electron-packager.js
 LICENSE_CHECKER = ./node_modules/license-checker/bin/license-checker
 
-run:
+run: kuroko-cli/kuroko-cli.exe
 	electron --debug=5858 .
+
+kuroko-cli/kuroko-cli.exe:
+	cd kuroko-cli; ./build_shell.bat nmake build_release
+
 
 init:
 	npm install
@@ -12,7 +18,7 @@ init:
 	
 
 #darwin,win32,linux
-build: clean
+build: clean kuroko-cli/kuroko-cli.exe
 	$(LICENSE_CHECKER) --production --relativeLicensePath > THIRD-PARTY-LICENSES.md
 	$(PACKAGER) . kuroko \
 		--out=packaging-work \
@@ -37,6 +43,7 @@ pack: build
 
 clean:
 	rm packaging-work -r -f
+	cd kuroko-cli; ./build_shell.bat nmake clean
 
 distclean: clean
 	rm node_modules -r -f
