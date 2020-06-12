@@ -61,11 +61,36 @@ class Store {
             this.trigger(CHANGE.OPEN_DIALOG_MODAL_MESSAGE, msg);
         });
         
+        this.initKurokoCLI_();
         //this.checkClipBoard();
         //setInterval(this.checkClipBoard.bind(this), 1000);
     }
 
-    checkClipBoard(){
+    initKurokoCLI_() {
+        this.inExec = true;
+        exec(`${this.kurokoCLI_Bin_} -k`, (err, stdout, stderr) => {
+            console.log("kuroko-cli: " + stdout);
+            if (err) {
+                console.log("Kuroko-cli could not open a virtual printer. Now try to install the printer.");
+                exec(`${this.kurokoCLI_Bin_} -i`, (err, stdout, stderr) => {
+                    console.log("kuroko-cli: " + stdout);
+                    if (err) {
+                        console.log("Kuroko-cli could not install a virtual printer.");
+                        this.trigger(this.ACTION.OPEN_DIALOG_MODAL_MESSAGE, "Failed initialization. Could not install a virtual printer.");
+                    }
+                    else {
+                        this.inExec = false;
+                    }
+                });
+            }
+            else {
+                console.log("Successfully opened a virtual printer.");
+                this.inExec = false;
+            }
+        });
+    }
+
+    checkClipBoard() {
         if (this.inExec) {
             return;
         }
