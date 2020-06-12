@@ -3,5 +3,6 @@
 *.exe
 node_modules
 packaging-work
+package-lock.json
 work/*
 THIRD-PARTY-LICENSES.md

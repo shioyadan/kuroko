@@ -1,5 +1,7 @@
 {
-    "author": {"name": "Ryota Shioya"},
+    "author": {
+        "name": "Ryota Shioya"
+    },
     "dependencies": {
         "vue": "2.6.11",
         "http-vue-loader": "1.4.2",
@@ -8,7 +10,8 @@
         "pdfjs-dist": "2.3.200"
     },
     "devDependencies": {
-        "license-checker": "^15.0.0"
+        "license-checker": "^15.0.0",
+        "webpack": "4.43.0"
     },
     "main": "main.js"
 }

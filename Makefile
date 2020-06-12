@@ -2,7 +2,7 @@
 
 PACKAGER = electron-packager
 #PACKAGER = ./node_modules/electron-packager/bin/electron-packager.js
-LICENSE_CHECKER = ./node_modules/license-checker/bin/license-checker
+LICENSE_CHECKER = npx license-checker
 
 run: kuroko-cli/kuroko-cli.exe
 	electron --debug=5858 .
@@ -14,8 +14,6 @@ kuroko-cli/kuroko-cli.exe:
 init:
 	npm install
 	chmod 755 $(LICENSE_CHECKER)
-	chmod 755 $(PACKAGER)
-	
 
 #darwin,win32,linux
 build: clean kuroko-cli/kuroko-cli.exe
