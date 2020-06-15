@@ -7,25 +7,27 @@ LICENSE_CHECKER = npx license-checker
 run: kuroko-cli/kuroko-cli.exe dist/external_modules.js
 	electron --debug=5858 .
 
+# Bundle external libraries into a single file (dist/external_modules.js)
 dist/external_modules.js: external_modules_src.js webpack.config.js
 	rm dist/*.js -f
 	npx webpack --config=webpack.config.js
 
+# Build kuroko-cli
 kuroko-cli/kuroko-cli.exe:
 	cd kuroko-cli; ./build_shell.bat nmake build_release
+
 
 init:
 	npm install
 
-
-#darwin,win32,linux
+# Build a electron binary
 build: clean kuroko-cli/kuroko-cli.exe dist/external_modules.js
-	$(LICENSE_CHECKER) --production --relativeLicensePath > THIRD-PARTY-LICENSES.md
+	$(LICENSE_CHECKER) --production > THIRD-PARTY-LICENSES.md
 	$(PACKAGER) . kuroko \
 		--out=packaging-work \
 		--platform=win32 \
 		--arch=x64  \
-		--electron-version=9.0.0 \
+		--electron-version=9.0.4 \
 		--ignore "^/work" \
 		--ignore "^/packaging-work" \
 		--ignore "^/node_modules" \
