@@ -40,9 +40,7 @@ module.exports = {
         let store = this.store;
 
         // Loaded via <script> tag, create shortcut to access PDF.js exports.
-        let pdfjsLib = global.require("./node_modules/pdfjs-dist/build/pdf.min.js");
-        pdfjsLib.GlobalWorkerOptions.workerSrc = "./node_modules/pdfjs-dist/build/pdf.worker.min.js";
-        self.pdfjsLib = pdfjsLib;
+        self.pdfjsLib = store.pdfjsLib;
 
         store.on(store.CHANGE.START_PROCESSING, function(){
             // 処理開始時にサイズ 0 にして不可視に

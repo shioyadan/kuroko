@@ -4,19 +4,22 @@ PACKAGER = electron-packager
 #PACKAGER = ./node_modules/electron-packager/bin/electron-packager.js
 LICENSE_CHECKER = npx license-checker
 
-run: kuroko-cli/kuroko-cli.exe
+run: kuroko-cli/kuroko-cli.exe dist/external_modules.js
 	electron --debug=5858 .
+
+dist/external_modules.js: external_modules_src.js webpack.config.js
+	rm dist/*.js -f
+	npx webpack --config=webpack.config.js
 
 kuroko-cli/kuroko-cli.exe:
 	cd kuroko-cli; ./build_shell.bat nmake build_release
 
-
 init:
 	npm install
-	chmod 755 $(LICENSE_CHECKER)
+
 
 #darwin,win32,linux
-build: clean kuroko-cli/kuroko-cli.exe
+build: clean kuroko-cli/kuroko-cli.exe dist/external_modules.js
 	$(LICENSE_CHECKER) --production --relativeLicensePath > THIRD-PARTY-LICENSES.md
 	$(PACKAGER) . kuroko \
 		--out=packaging-work \
@@ -25,10 +28,10 @@ build: clean kuroko-cli/kuroko-cli.exe
 		--electron-version=9.0.0 \
 		--ignore "^/work" \
 		--ignore "^/packaging-work" \
+		--ignore "^/node_modules" \
 		--ignore "^.\\.vscode" \
 		--ignore "\\.pdf$$" \
-		--ignore "^/node_modules/bootstrap-vue/src" \
-		--ignore "^/node_modules/bootstrap-vue/esm" \
+		--ignore "^/kuroko-cli/(?!kuroko-cli.exe)" \
 		--prune=true	# Exclude devDependencies
 
 DOCUMENTS = README.md LICENSE.md THIRD-PARTY-LICENSES.md
@@ -40,6 +43,7 @@ pack: build
 	#cd packaging-work/; tar -cvzf kuroko-darwin-x64.tar.gz kuroko-darwin-x64 $(DOCUMENTS)
 
 clean:
+	rm dist/*.js -f
 	rm packaging-work -r -f
 	cd kuroko-cli; ./build_shell.bat nmake clean
 

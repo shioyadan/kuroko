@@ -20,7 +20,7 @@ const CHANGE = {
 };
 
 class Store {
-    constructor() {
+    constructor(externalModules) {
         this.tmpPDF_FileName_ = __dirname + "/tmp2.pdf";
         this.kurokoCLI_Bin_ = __dirname + "/kuroko-cli/kuroko-cli.exe";
 
@@ -30,6 +30,7 @@ class Store {
         this.isPDF_Created = false;
         this.autoCapture = false;
         this.inExec = false;
+        this.pdfjsLib = externalModules.pdfjsLib;
 
         this.on(ACTION.SAVE_PDF_FILE, (fileName)=>{
 

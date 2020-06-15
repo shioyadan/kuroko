@@ -5,12 +5,8 @@
         <meta charset="UTF-8">
         <title>Kuroko</title>
 
-        <!-- 
-            スタイルシートは最初に読み込んでおく必要がある．
-            各ライブラリは内部でスタイルシートを挿入することがあり，その場合参照がずれる．
-        -->
-        <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap-vue/dist/bootstrap-vue.min.css">
+        <script src="dist/external_modules.js"></script>
+        <!-- CSS リセットがかかった後に適用したいので，この下に -->
         <style type="text/css">
             html, body {
                 width: 100%;      /* ウィンドウ全体に*/
@@ -21,25 +17,21 @@
             }
         </style>
         
-        <script src="./node_modules/vue/dist/vue.js"></script>
-        <script src="./node_modules/bootstrap-vue/dist/bootstrap-vue.js"></script>    
-        <script src="./node_modules/bootstrap-vue/dist/bootstrap-vue-icons.min.js"></script>
-        <script src="./node_modules/http-vue-loader/src/httpVueLoader.js"></script>
-        <!--
-        <script src="./node_modules/pdfjs-dist/build/pdf.js"></script>
-        -->
     </head>
 
     <body>
+        <!-- Mount point -->
         <div id="app-holder">
             <app :store="store"></app>
         </div>
 
         <script>
             let {remote} = require("electron");
+            let {Vue, BootstrapVue, BootstrapVueIcons, httpVueLoader} = global.externalModules;
+
 
             let Store = require("./store.js").Store;
-            let store = new Store();
+            let store = new Store(global.externalModules);
 
             let template = [{
                 label: "Help",
