@@ -21,6 +21,8 @@ const CHANGE = {
 
 class Store {
     constructor(externalModules) {
+        // They *must not* be double quoted in the following.
+        // They must be double quoted only for exec().
         this.tmpPDF_FileName_ = __dirname + "/tmp2.pdf";
         this.kurokoCLI_Bin_ = __dirname + "/kuroko-cli/kuroko-cli.exe";
 
@@ -70,7 +72,8 @@ class Store {
     initKurokoCLI_() {
         this.inExec = true;
 
-        exec(`${this.kurokoCLI_Bin_} -k`, (err, stdout, stderr) => {
+        // kurokoCLI_Bin_ must be double quoted only for exec().
+        exec(`"${this.kurokoCLI_Bin_}" -k`, (err, stdout, stderr) => {
             console.log("kuroko-cli: " + stdout);
             if (err) {
                 if (!fs.existsSync(this.kurokoCLI_Bin_)) {
@@ -82,7 +85,8 @@ class Store {
                 }
 
                 console.log("Kuroko-cli could not open a virtual printer. Now try to install the printer.");
-                exec(`${this.kurokoCLI_Bin_} -i`, (err, stdout, stderr) => {
+                // kurokoCLI_Bin_ must be double quoted only for exec().
+                exec(`"${this.kurokoCLI_Bin_}" -i`, (err, stdout, stderr) => {
                     console.log("kuroko-cli: " + stdout);
                     if (err) {
                         this.trigger(
@@ -109,7 +113,8 @@ class Store {
         console.log("Start conversion");
         this.inExec = true;
         this.trigger(CHANGE.START_PROCESSING);
-        exec(`${this.kurokoCLI_Bin_} -b ${this.tmpPDF_FileName_}`, (err, stdout, stderr) => {
+        // tmpPDF_FileName_ must be double quoted.
+        exec(`"${this.kurokoCLI_Bin_}" -b "${this.tmpPDF_FileName_}"`, (err, stdout, stderr) => {
             this.inExec = false;
             if (!err) {
                 this.isPDF_Created = true;
