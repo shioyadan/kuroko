@@ -1,6 +1,7 @@
 # Kuroko
 
-Kuroko is a small tool to convert from EMF to PDF.
+Kuroko is a small tool to convert from EMF to PDF. You can download a pre-compiled binary from [here](https://github.com/shioyadan/kuroko/releases).
+
 
 * It captures EMF data in a clipboard and converts it to PDF.
 * In a similar way as [MetafileToEPSConverter](https://wiki.lyx.org/Windows/MetafileToEPSConverter), which makes EPS files, you can make PDF files from pictures on MS Power Point/Excel.
