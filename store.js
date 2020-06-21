@@ -4,6 +4,7 @@ const fs = require("fs");
 
 let id_ = 1;
 const ACTION = {
+    INITIALIZE_STORE: id_++,
     SAVE_PDF_FILE: id_++,
     CHECK_CLIPBOARD: id_++,
     SET_AUTO_CAPTURE: id_++,
@@ -20,11 +21,13 @@ const CHANGE = {
 };
 
 class Store {
+
     constructor(externalModules) {
         // They *must not* be double quoted in the following.
         // They must be double quoted only for exec().
         this.tmpPDF_FileName_ = __dirname + "/tmp2.pdf";
         this.kurokoCLI_Bin_ = __dirname + "/kuroko-cli/kuroko-cli.exe";
+        this.initialized = false;
 
         this.prevSavedPDF_FileName = "";
         this.flag = false;
@@ -64,13 +67,16 @@ class Store {
             this.trigger(CHANGE.OPEN_DIALOG_MODAL_MESSAGE, msg);
         });
         
-        this.initKurokoCLI_();
+        this.on(ACTION.INITIALIZE_STORE, (msg) => {
+            this.initKurokoCLI_();
+        });
         //this.checkClipBoard();
         //setInterval(this.checkClipBoard.bind(this), 1000);
     }
 
     initKurokoCLI_() {
         this.inExec = true;
+        this.trigger(CHANGE.START_PROCESSING);
 
         // kurokoCLI_Bin_ must be double quoted only for exec().
         exec(`"${this.kurokoCLI_Bin_}" -k`, (err, stdout, stderr) => {
@@ -81,6 +87,9 @@ class Store {
                         this.ACTION.OPEN_DIALOG_MODAL_MESSAGE, 
                         `Could not find a binary: ${this.kurokoCLI_Bin_}.`
                     );
+                    this.initialized = false;
+                    this.inExec = false;
+                    this.trigger(CHANGE.END_PROCESSING);
                     return;
                 }
 
@@ -95,21 +104,27 @@ class Store {
                         );
                     }
                     else {
+                        console.log("Successfully installed a virtual printer.");
+                        this.initialized = true;
                         this.inExec = false;
+                        this.trigger(CHANGE.END_PROCESSING);
                     }
                 });
             }
             else {
                 console.log("Successfully opened a virtual printer.");
+                this.initialized = true;
                 this.inExec = false;
+                this.trigger(CHANGE.END_PROCESSING);
             }
         });
     }
 
     checkClipBoard() {
-        if (this.inExec) {
+        if (this.inExec || !this.initialized) {
             return;
         }
+
         console.log("Start conversion");
         this.inExec = true;
         this.trigger(CHANGE.START_PROCESSING);

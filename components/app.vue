@@ -66,6 +66,8 @@ module.exports = {
 
             // Now all initialization is finished and show window.
             electronWindow.show();
+
+            store.trigger(store.ACTION.INITIALIZE_STORE);
         });
 
     },
