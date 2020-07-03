@@ -21,6 +21,7 @@ Non-developer users are recommended to use a pre-compiled binary available [here
     * Visual Studio Build Tools 2019 - C++ Build Tools 
 * Run these commands in cygwin.
     ```
+    npm install electron electron-packager -g
     make init 
     make run   # Launch kuroko directly 
     make pack  # Build a release binary
