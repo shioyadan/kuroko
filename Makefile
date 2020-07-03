@@ -27,7 +27,7 @@ build: clean kuroko-cli/kuroko-cli.exe dist/external_modules.js
 		--out=packaging-work \
 		--platform=win32 \
 		--arch=x64  \
-		--electron-version=9.0.4 \
+		--electron-version=9.0.5 \
 		--ignore "^/work" \
 		--ignore "^/packaging-work" \
 		--ignore "^/node_modules" \
