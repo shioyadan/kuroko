@@ -1,6 +1,6 @@
-const {exec} = require("child_process")
+const {exec} = require("child_process");
 const fs = require("fs");
-
+const electron = require("electron");
 
 let id_ = 1;
 const ACTION = {
@@ -23,9 +23,11 @@ const CHANGE = {
 class Store {
 
     constructor(externalModules) {
+        this.cfgPath_ = electron.remote.app.getPath("userData") + "/kuroko";
+
         // They *must not* be double quoted in the following.
         // They must be double quoted only for exec().
-        this.tmpPDF_FileName_ = __dirname + "/tmp2.pdf";
+        this.tmpPDF_FileName_ = this.cfgPath_ + "/kuroko-tmp.pdf";
         this.kurokoCLI_Bin_ = __dirname + "/kuroko-cli/kuroko-cli.exe";
         this.initialized = false;
 
@@ -69,9 +71,30 @@ class Store {
         
         this.on(ACTION.INITIALIZE_STORE, (msg) => {
             this.initKurokoCLI_();
+            this.createConfigDir_();
         });
         //this.checkClipBoard();
         //setInterval(this.checkClipBoard.bind(this), 1000);
+    }
+
+    createConfigDir_() {
+        try {
+            fs.statSync(this.cfgPath_);
+        }
+        catch (e) {
+            console.log(`Could not open ${this.cfgPath_}`);
+            try {
+                fs.mkdirSync(this.cfgPath_);
+                console.log(`Successfully made a configuration directory ${this.cfgPath_}`);
+            }
+            catch (e) {
+                console.log(`Could not make ${this.cfgPath_}`);
+                this.trigger(
+                    this.ACTION.OPEN_DIALOG_MODAL_MESSAGE, `Could not make ${this.cfgPath_}`
+                );
+                this.initialized = false;
+            }
+        }
     }
 
     initKurokoCLI_() {
