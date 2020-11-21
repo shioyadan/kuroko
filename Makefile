@@ -1,11 +1,11 @@
 # This file is assumed to be used with MAKE in cygwin
 
-PACKAGER = electron-packager
+PACKAGER = npx electron-packager
 #PACKAGER = ./node_modules/electron-packager/bin/electron-packager.js
 LICENSE_CHECKER = npx license-checker
 
 run: kuroko-cli/kuroko-cli.exe dist/external_modules.js
-	electron --debug=5858 .
+	npx electron --debug=5858 .
 
 # Bundle external libraries into a single file (dist/external_modules.js)
 dist/external_modules.js: external_modules_src.js webpack.config.js
@@ -27,7 +27,7 @@ build: clean kuroko-cli/kuroko-cli.exe dist/external_modules.js
 		--out=packaging-work \
 		--platform=win32 \
 		--arch=x64  \
-		--electron-version=9.0.5 \
+		--electron-version=10.1.3 \
 		--ignore "^/work" \
 		--ignore "^/packaging-work" \
 		--ignore "^/node_modules" \
